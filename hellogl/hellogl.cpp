@@ -115,7 +115,7 @@ ATOM RegisterGLWindowClass(HINSTANCE hInstance)
 	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
 	wcex.lpszMenuName	= MAKEINTRESOURCE(IDC_HELLOGL);
 	wcex.lpszClassName	= c_glwin_class;
-	wcex.hIconSm		= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+	wcex.hIconSm		= NULL;
 
 	return RegisterClassEx(&wcex);
 }
@@ -197,29 +197,6 @@ LRESULT CALLBACK GlWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 		MessageBoxA(0, (char*)glGetString(GL_VERSION), "OPENGL VERSION", 0);
 		break;
 	}
-	case WM_COMMAND:
-		wmId    = LOWORD(wParam);
-		wmEvent = HIWORD(wParam);
-		// Parse the menu selections:
-		switch (wmId)
-		{
-		case IDM_ABOUT:
-			DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-			break;
-		case IDM_EXIT:
-			DestroyWindow(hWnd);
-			break;
-		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
-		}
-		break;
-	case WM_SIZE:
-		if (hGLRC) {
-			int winWidth = (int)LOWORD(lParam);
-			int winHeight = (int)HIWORD(lParam);
-			glViewport(0, 0, winWidth, winHeight);
-			break;
-		}
 	case WM_PAINT:
 	{
 	    PAINTSTRUCT ps;
@@ -259,7 +236,6 @@ LRESULT CALLBACK GlWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 			wglMakeCurrent(NULL, NULL);
 			wglDeleteContext(hGLRC);
 		}
-		PostQuitMessage(0);
 		break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
