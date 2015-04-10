@@ -6,6 +6,6 @@ The sample shows how to
  - Use gl3w (included in project) to load OpenGL3+ functions.
  - Use shaders and buffer objects for simple drawing.
 
-Requires Visual Studio 2013.
+Uses Visual Studio 2013.
 
 ![hellogl screenshot](https://raw.github.com/lmurmann/hellogl/master/screenshot.png)
